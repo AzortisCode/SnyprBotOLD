@@ -4,26 +4,28 @@ import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
+import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
+import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeSearchProvider;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.VoiceChannel;
-import org.apache.commons.validator.routines.UrlValidator;
 
-import java.net.URL;
-import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MusicManager {
     private final AudioPlayerManager playerManager;
+    private final YoutubeSearchProvider youtubeSearchProvider;
     private final Map<Long, GuildMusicManager> musicManagers;
 
     public MusicManager(){
         this.musicManagers = new HashMap<>();
         this.playerManager = new DefaultAudioPlayerManager();
+        playerManager.registerSourceManager(new YoutubeAudioSourceManager());
+        youtubeSearchProvider = new YoutubeSearchProvider(playerManager.source(YoutubeAudioSourceManager.class));
         AudioSourceManagers.registerRemoteSources(playerManager);
         AudioSourceManagers.registerLocalSource(playerManager);
     }
@@ -39,7 +41,7 @@ public class MusicManager {
         return musicManager;
     }
 
-    public void loadAndPlay(VoiceChannel voiceChannel, TextChannel textChannel, String trackId){
+    public void queue(VoiceChannel voiceChannel, TextChannel textChannel, String trackId){
         GuildMusicManager musicManager = getGuildAudioManager(voiceChannel.getGuild());
         playerManager.loadItemOrdered(musicManager, trackId, new AudioLoadResultHandler() {
             @Override
@@ -64,6 +66,7 @@ public class MusicManager {
         });
     }
 
+
     private void queue(VoiceChannel voiceChannel, TextChannel textChannel, GuildMusicManager musicManager, AudioTrack track){
         openAudioConnection(voiceChannel);
         musicManager.getTrackScheduler().queue(track, textChannel);
@@ -86,4 +89,7 @@ public class MusicManager {
         }
     }
 
+    public YoutubeSearchProvider getYoutubeSearchProvider() {
+        return youtubeSearchProvider;
+    }
 }
