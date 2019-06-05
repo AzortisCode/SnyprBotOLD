@@ -14,6 +14,8 @@ public class TrackScheduler extends AudioEventAdapter {
     private final BlockingQueue<AudioTrack> queue;
     private TextChannel channel; //Stored so messages will be sent to the channel where the first command got called in
 
+    private boolean repeat = false;
+
     TrackScheduler(AudioPlayer player){
         this.player = player;
         this.queue = new LinkedBlockingQueue<>();
@@ -51,10 +53,23 @@ public class TrackScheduler extends AudioEventAdapter {
         if(track != null)channel.sendMessage(":musical_note: **Now playing** `" + track.getInfo().title + "`").queue();
     }
 
+    public boolean isRepeat(){
+        return repeat;
+    }
+
+    public void setRepeat(boolean repeat) {
+        this.repeat = repeat;
+    }
+
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
         if(endReason.mayStartNext){
-            nextTrack();
+            if(repeat){
+                player.startTrack(track.makeClone(), false);
+                channel.sendMessage(":musical_note: **Now playing** `" + track.makeClone().getInfo().title + "`").queue();
+            }else {
+                nextTrack();
+            }
         }
     }
 

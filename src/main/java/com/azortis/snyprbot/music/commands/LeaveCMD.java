@@ -12,9 +12,9 @@ public class LeaveCMD implements Command {
     public void execute(MessageReceivedEvent event, String[] args) {
         if(event.getGuild() != null){
             Guild guild = event.getGuild();
-            if(guild.getMember(event.getJDA().getSelfUser()).getVoiceState().getChannel()!= null){
-                event.getChannel().sendMessage(":mailbox: **Leaving now... Bye!**").queue();
+            if(event.getMember().getVoiceState().getChannel() == guild.getMember(event.getJDA().getSelfUser()).getVoiceState().getChannel()){
                 MusicManager musicManager = SnyprBot.getMusicManager();
+                event.getChannel().sendMessage(":mailbox: **Leaving now... Bye!**").queue();
                 musicManager.closeAudioConnection(guild);
                 musicManager.getGuildAudioManager(guild).getPlayer().stopTrack();
                 musicManager.getGuildAudioManager(guild).getTrackScheduler().emptyQueue();
