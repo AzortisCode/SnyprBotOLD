@@ -3,7 +3,7 @@ package com.azortis.snyprbot;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import com.azortis.snyprbot.commands.PingCMD;
-import com.azortis.snyprbot.music.AudioManager;
+import com.azortis.snyprbot.music.MusicManager;
 import com.azortis.snyprbot.music.commands.LeaveCMD;
 import com.azortis.snyprbot.music.commands.PlayCMD;
 import com.google.gson.Gson;
@@ -22,7 +22,7 @@ public final class SnyprBot {
     private static Config config;
     private static String directory;
     private static Map<String, Command> commandMap = new HashMap<>();
-    private static AudioManager audioManager;
+    private static MusicManager musicManager;
 
     public static void main(String[] args)throws Exception{
         Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
@@ -31,7 +31,7 @@ public final class SnyprBot {
         directory = directory.replace("%20", " ");
         loadConfig();
         registerCommands();
-        audioManager = new AudioManager();
+        musicManager = new MusicManager();
         client = new JDABuilder(config.getToken()).build();
         client.addEventListener(new EventListener());
         client.awaitReady();
@@ -87,7 +87,7 @@ public final class SnyprBot {
         return commandMap;
     }
 
-    public static AudioManager getAudioManager() {
-        return audioManager;
+    public static MusicManager getMusicManager() {
+        return musicManager;
     }
 }

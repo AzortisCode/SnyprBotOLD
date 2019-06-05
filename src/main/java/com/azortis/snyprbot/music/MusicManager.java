@@ -14,39 +14,39 @@ import net.dv8tion.jda.core.entities.VoiceChannel;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AudioManager {
+public class MusicManager {
     private final AudioPlayerManager playerManager;
-    private final Map<Long, GuildAudioManager> audioManagers;
+    private final Map<Long, GuildMusicManager> musicManagers;
 
-    public AudioManager(){
-        this.audioManagers = new HashMap<>();
+    public MusicManager(){
+        this.musicManagers = new HashMap<>();
         this.playerManager = new DefaultAudioPlayerManager();
         AudioSourceManagers.registerRemoteSources(playerManager);
         AudioSourceManagers.registerLocalSource(playerManager);
     }
 
-    public GuildAudioManager getGuildAudioManager(Guild guild){
+    public GuildMusicManager getGuildAudioManager(Guild guild){
         long guildId = Long.parseLong(guild.getId());
-        GuildAudioManager audioManager = audioManagers.get(guildId);
-        if(audioManager == null){
-            audioManager = new GuildAudioManager(playerManager);
-            audioManagers.put(guildId, audioManager);
+        GuildMusicManager musicManager = musicManagers.get(guildId);
+        if(musicManager == null){
+            musicManager = new GuildMusicManager(playerManager);
+            musicManagers.put(guildId, musicManager);
         }
-        guild.getAudioManager().setSendingHandler(audioManager.getSendHandler());
-        return audioManager;
+        guild.getAudioManager().setSendingHandler(musicManager.getSendHandler());
+        return musicManager;
     }
 
     public void loadAndPlay(VoiceChannel voiceChannel, TextChannel textChannel, String trackURL){
-        GuildAudioManager audioManager = getGuildAudioManager(voiceChannel.getGuild());
-        playerManager.loadItemOrdered(audioManager, trackURL, new AudioLoadResultHandler() {
+        GuildMusicManager musicManager = getGuildAudioManager(voiceChannel.getGuild());
+        playerManager.loadItemOrdered(musicManager, trackURL, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack audioTrack) {
-                queue(voiceChannel, textChannel, audioManager, audioTrack);
+                queue(voiceChannel, textChannel, musicManager, audioTrack);
             }
 
             @Override
             public void playlistLoaded(AudioPlaylist audioPlaylist) {
-                queueList(voiceChannel, textChannel, audioManager, audioPlaylist);
+                queueList(voiceChannel, textChannel, musicManager, audioPlaylist);
             }
 
             @Override
@@ -61,14 +61,14 @@ public class AudioManager {
         });
     }
 
-    private void queue(VoiceChannel voiceChannel, TextChannel textChannel, GuildAudioManager audioManager, AudioTrack track){
+    private void queue(VoiceChannel voiceChannel, TextChannel textChannel, GuildMusicManager musicManager, AudioTrack track){
         openAudioConnection(voiceChannel);
-        audioManager.getTrackScheduler().queue(track, textChannel);
+        musicManager.getTrackScheduler().queue(track, textChannel);
     }
 
-    private void queueList(VoiceChannel voiceChannel, TextChannel textChannel, GuildAudioManager audioManager, AudioPlaylist playlist){
+    private void queueList(VoiceChannel voiceChannel, TextChannel textChannel, GuildMusicManager musicManager, AudioPlaylist playlist){
         openAudioConnection(voiceChannel);
-        audioManager.getTrackScheduler().queueList(playlist, textChannel);
+        musicManager.getTrackScheduler().queueList(playlist, textChannel);
     }
 
     private void openAudioConnection(VoiceChannel channel){

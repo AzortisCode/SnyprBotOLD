@@ -3,11 +3,11 @@ package com.azortis.snyprbot.music;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 
-public class GuildAudioManager {
+public class GuildMusicManager {
     private AudioPlayer player;
     private TrackScheduler trackScheduler;
 
-    public GuildAudioManager(AudioPlayerManager playerManager){
+    public GuildMusicManager(AudioPlayerManager playerManager){
         this.player = playerManager.createPlayer();
         this.trackScheduler = new TrackScheduler(player);
         player.addListener(trackScheduler);

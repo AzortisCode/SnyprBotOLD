@@ -11,7 +11,7 @@ public class PlayCMD implements Command {
     public void execute(MessageReceivedEvent event, String[] args) {
         if(event.getGuild() != null) {
             VoiceChannel voiceChannel = event.getMember().getVoiceState().getChannel();
-            SnyprBot.getAudioManager().loadAndPlay(voiceChannel, event.getTextChannel(), args[0]);
+            SnyprBot.getMusicManager().loadAndPlay(voiceChannel, event.getTextChannel(), args[0]);
         }
     }
 }
