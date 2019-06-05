@@ -6,6 +6,7 @@ import com.azortis.snyprbot.commands.PingCMD;
 import com.azortis.snyprbot.music.MusicManager;
 import com.azortis.snyprbot.music.commands.LeaveCMD;
 import com.azortis.snyprbot.music.commands.PlayCMD;
+import com.azortis.snyprbot.music.commands.SkipCMD;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import net.dv8tion.jda.core.JDA;
@@ -56,6 +57,7 @@ public final class SnyprBot {
         //Music
         commandMap.put("play", new PlayCMD());
         commandMap.put("leave", new LeaveCMD());
+        commandMap.put("skip", new SkipCMD());
     }
 
     private static void copy(InputStream in, File file) {
