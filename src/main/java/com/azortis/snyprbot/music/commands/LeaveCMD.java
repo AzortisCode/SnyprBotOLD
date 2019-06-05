@@ -16,6 +16,7 @@ public class LeaveCMD implements Command {
                 event.getChannel().sendMessage(":mailbox: **Leaving now... Bye!**").queue();
                 MusicManager musicManager = SnyprBot.getMusicManager();
                 musicManager.closeAudioConnection(guild);
+                musicManager.getGuildAudioManager(guild).getPlayer().stopTrack();
                 musicManager.getGuildAudioManager(guild).getTrackScheduler().emptyQueue();
                 musicManager.getGuildAudioManager(guild).getTrackScheduler().unbindTextChannel();
             }else{

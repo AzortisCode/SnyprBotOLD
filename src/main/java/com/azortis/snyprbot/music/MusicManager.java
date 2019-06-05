@@ -10,7 +10,10 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.VoiceChannel;
+import org.apache.commons.validator.routines.UrlValidator;
 
+import java.net.URL;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,9 +39,9 @@ public class MusicManager {
         return musicManager;
     }
 
-    public void loadAndPlay(VoiceChannel voiceChannel, TextChannel textChannel, String trackURL){
+    public void loadAndPlay(VoiceChannel voiceChannel, TextChannel textChannel, String trackId){
         GuildMusicManager musicManager = getGuildAudioManager(voiceChannel.getGuild());
-        playerManager.loadItemOrdered(musicManager, trackURL, new AudioLoadResultHandler() {
+        playerManager.loadItemOrdered(musicManager, trackId, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack audioTrack) {
                 queue(voiceChannel, textChannel, musicManager, audioTrack);
