@@ -21,11 +21,16 @@ public class PlayCMD implements Command {
             if(UrlValidator.getInstance().isValid(args[0])){
                 trackId = args[0];
             }else{
-                String searchArgs = Arrays.toString(args);
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int i = 0; i < args.length; i++){
+                    stringBuilder.append(args[i]).append(" ");
+                }
+                String searchArgs = stringBuilder.toString().trim();
+                event.getChannel().sendMessage("**Searching** :mag_right: `" + searchArgs + "`").queue();
                 AudioPlaylist playlist = (AudioPlaylist) musicManager.getYoutubeSearchProvider().loadSearchResult(searchArgs);
                 trackId = playlist.getTracks().get(0).getInfo().uri;
             }
-            musicManager.queue(voiceChannel, event.getTextChannel(), trackId);
+            musicManager.queue(voiceChannel, event.getTextChannel(), trackId, event.getAuthor().getIdLong());
         }
     }
 }

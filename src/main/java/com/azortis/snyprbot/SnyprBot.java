@@ -4,10 +4,7 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import com.azortis.snyprbot.commands.PingCMD;
 import com.azortis.snyprbot.music.MusicManager;
-import com.azortis.snyprbot.music.commands.LeaveCMD;
-import com.azortis.snyprbot.music.commands.PlayCMD;
-import com.azortis.snyprbot.music.commands.RepeatCMD;
-import com.azortis.snyprbot.music.commands.SkipCMD;
+import com.azortis.snyprbot.music.commands.*;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import net.dv8tion.jda.core.JDA;
@@ -60,6 +57,8 @@ public final class SnyprBot {
         commandMap.put("leave", new LeaveCMD());
         commandMap.put("skip", new SkipCMD());
         commandMap.put("repeat", new RepeatCMD());
+        commandMap.put("pause", new PauseCMD());
+        commandMap.put("resume", new ResumeCMD());
     }
 
     private static void copy(InputStream in, File file) {

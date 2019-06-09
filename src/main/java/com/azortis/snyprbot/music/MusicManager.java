@@ -41,16 +41,18 @@ public class MusicManager {
         return musicManager;
     }
 
-    public void queue(VoiceChannel voiceChannel, TextChannel textChannel, String trackId){
+    public void queue(VoiceChannel voiceChannel, TextChannel textChannel, String trackId, long requesterId){
         GuildMusicManager musicManager = getGuildAudioManager(voiceChannel.getGuild());
         playerManager.loadItemOrdered(musicManager, trackId, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack audioTrack) {
+                audioTrack.setUserData(requesterId);
                 queue(voiceChannel, textChannel, musicManager, audioTrack);
             }
 
             @Override
             public void playlistLoaded(AudioPlaylist audioPlaylist) {
+                audioPlaylist.getTracks().forEach(track -> track.setUserData(requesterId));
                 queueList(voiceChannel, textChannel, musicManager, audioPlaylist);
             }
 
