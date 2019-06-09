@@ -8,8 +8,6 @@ import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.apache.commons.validator.routines.UrlValidator;
 
-import java.util.Arrays;
-
 public class PlayCMD implements Command {
 
     @Override
@@ -22,8 +20,8 @@ public class PlayCMD implements Command {
                 trackId = args[0];
             }else{
                 StringBuilder stringBuilder = new StringBuilder();
-                for (int i = 0; i < args.length; i++){
-                    stringBuilder.append(args[i]).append(" ");
+                for (String arg : args){
+                    stringBuilder.append(arg).append(" ");
                 }
                 String searchArgs = stringBuilder.toString().trim();
                 event.getChannel().sendMessage("**Searching** :mag_right: `" + searchArgs + "`").queue();

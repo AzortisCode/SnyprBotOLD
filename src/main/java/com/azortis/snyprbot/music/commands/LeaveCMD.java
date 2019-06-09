@@ -19,6 +19,7 @@ public class LeaveCMD implements Command {
                 musicManager.getGuildAudioManager(guild).getPlayer().stopTrack();
                 musicManager.getGuildAudioManager(guild).getTrackScheduler().emptyQueue();
                 musicManager.getGuildAudioManager(guild).getTrackScheduler().unbindTextChannel();
+                musicManager.getGuildAudioManager(guild).getTrackScheduler().setRepeat(false);
             }else{
                 event.getChannel().sendMessage(":x: **I'm not in a voice channel!**").queue();
             }
