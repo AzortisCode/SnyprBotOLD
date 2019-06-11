@@ -115,7 +115,9 @@ public class TrackScheduler extends AudioEventAdapter {
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
         if(endReason.mayStartNext){
             if(repeat){
-                player.startTrack(track.makeClone(), false);
+                AudioTrack trackClone = track.makeClone();
+                trackClone.setUserData(track.getUserData());
+                player.startTrack(trackClone, false);
                 User requester = SnyprBot.getClient().getUserById((Long) track.getUserData());
                 long duration = track.getInfo().length;
                 MessageEmbed playingNowEmbed = new EmbedBuilder()
