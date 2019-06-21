@@ -1,6 +1,7 @@
 package com.azortis.snyprbot.music.commands;
 
 import com.azortis.snyprbot.Command;
+import com.azortis.snyprbot.CommandCategory;
 import com.azortis.snyprbot.SnyprBot;
 import com.azortis.snyprbot.music.MusicManager;
 import net.dv8tion.jda.core.entities.Guild;
@@ -23,4 +24,10 @@ public class ResumeCMD implements Command {
             }
         }
     }
+
+    @Override
+    public CommandCategory getCategory() {
+        return CommandCategory.MUSIC;
+    }
+
 }

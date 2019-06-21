@@ -3,5 +3,14 @@
   "defaultPrefix": "-",
   "ownerIDs": [""],
   "botLogChannelID": "",
-  "embedColor": ""
+  "embedColor": "",
+  "defaultActivity": "",
+  "guildSettings": {
+    "mysql": false,
+    "host": "",
+    "port":  "",
+    "database": "",
+    "username": "",
+    "password": ""
+  }
 }

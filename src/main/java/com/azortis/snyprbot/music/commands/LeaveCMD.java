@@ -1,6 +1,7 @@
 package com.azortis.snyprbot.music.commands;
 
 import com.azortis.snyprbot.Command;
+import com.azortis.snyprbot.CommandCategory;
 import com.azortis.snyprbot.SnyprBot;
 import com.azortis.snyprbot.music.MusicManager;
 import net.dv8tion.jda.core.entities.Guild;
@@ -24,5 +25,10 @@ public class LeaveCMD implements Command {
                 event.getChannel().sendMessage(":x: **I'm not in a voice channel!**").queue();
             }
         }
+    }
+
+    @Override
+    public CommandCategory getCategory() {
+        return CommandCategory.MUSIC;
     }
 }

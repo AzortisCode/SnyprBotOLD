@@ -3,8 +3,12 @@ package com.azortis.snyprbot;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import com.azortis.snyprbot.commands.PingCMD;
+import com.azortis.snyprbot.commands.SetActivityCMD;
+import com.azortis.snyprbot.commands.StopCMD;
+import com.azortis.snyprbot.database.DatabaseManager;
 import com.azortis.snyprbot.music.MusicManager;
 import com.azortis.snyprbot.music.commands.*;
+import com.azortis.snyprbot.settings.SettingsManager;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import net.dv8tion.jda.core.JDA;
@@ -20,6 +24,8 @@ public final class SnyprBot {
     private static JDA client;
     private static Config config;
     private static String directory;
+    private static DatabaseManager databaseManager;
+    private static SettingsManager settingsManager;
     private static Map<String, Command> commandMap = new HashMap<>();
     private static MusicManager musicManager;
 
@@ -29,6 +35,8 @@ public final class SnyprBot {
         directory = new File(SnyprBot.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent();
         directory = directory.replace("%20", " ");
         loadConfig();
+        databaseManager = new DatabaseManager();
+        settingsManager = new SettingsManager();
         registerCommands();
         musicManager = new MusicManager();
         client = new JDABuilder(config.getToken()).build();
@@ -59,6 +67,10 @@ public final class SnyprBot {
         commandMap.put("repeat", new RepeatCMD());
         commandMap.put("pause", new PauseCMD());
         commandMap.put("resume", new ResumeCMD());
+
+        //Bot owner
+        commandMap.put("stop", new StopCMD());
+        commandMap.put("setactivity", new SetActivityCMD());
     }
 
     private static void copy(InputStream in, File file) {
@@ -84,6 +96,14 @@ public final class SnyprBot {
 
     public static String getDirectory(){
         return directory;
+    }
+
+    public static DatabaseManager getDatabaseManager() {
+        return databaseManager;
+    }
+
+    public static SettingsManager getSettingsManager() {
+        return settingsManager;
     }
 
     public static Map<String, Command> getCommandMap() {

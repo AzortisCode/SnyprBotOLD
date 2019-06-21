@@ -1,6 +1,7 @@
 package com.azortis.snyprbot.music.commands;
 
 import com.azortis.snyprbot.Command;
+import com.azortis.snyprbot.CommandCategory;
 import com.azortis.snyprbot.SnyprBot;
 import com.azortis.snyprbot.music.MusicManager;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
@@ -31,4 +32,10 @@ public class PlayCMD implements Command {
             musicManager.queue(voiceChannel, event.getTextChannel(), trackId, event.getAuthor().getIdLong());
         }
     }
+
+    @Override
+    public CommandCategory getCategory() {
+        return CommandCategory.MUSIC;
+    }
+
 }

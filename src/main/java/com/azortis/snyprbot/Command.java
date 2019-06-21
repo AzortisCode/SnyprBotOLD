@@ -6,4 +6,6 @@ public interface Command {
 
     void execute(MessageReceivedEvent event, String[] args);
 
+    CommandCategory getCategory();
+
 }

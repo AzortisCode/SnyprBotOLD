@@ -1,6 +1,7 @@
 package com.azortis.snyprbot.commands;
 
 import com.azortis.snyprbot.Command;
+import com.azortis.snyprbot.CommandCategory;
 import com.azortis.snyprbot.SnyprBot;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageChannel;
@@ -23,5 +24,10 @@ public class PingCMD implements Command {
                 .setFooter("Executed by: " + event.getAuthor().getName() + "#" + event.getAuthor().getDiscriminator(), event.getAuthor().getAvatarUrl())
                 .setTimestamp(Instant.now()).build();
         channel.sendMessage(pingEmbed).queue();
+    }
+
+    @Override
+    public CommandCategory getCategory() {
+        return CommandCategory.INFO;
     }
 }

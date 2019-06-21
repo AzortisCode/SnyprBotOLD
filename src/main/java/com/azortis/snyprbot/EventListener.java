@@ -23,7 +23,7 @@ public class EventListener extends ListenerAdapter {
                 .setFooter("© SnyprBot | https://snyperbot.xyz", null)
                 .setTimestamp(Instant.now()).build();
         botLog.sendMessage(readyEmbed).queue();
-        event.getJDA().getPresence().setGame(Game.listening("snyprbot.xyz"));
+        event.getJDA().getPresence().setGame(Game.listening(SnyprBot.getConfig().getDefaultActivity()));
     }
 
     @Override
