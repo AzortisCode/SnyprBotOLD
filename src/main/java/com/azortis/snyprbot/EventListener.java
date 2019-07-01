@@ -1,12 +1,12 @@
 package com.azortis.snyprbot;
 
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.MessageEmbed;
-import net.dv8tion.jda.core.events.ReadyEvent;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.awt.*;
 import java.time.Instant;
@@ -23,7 +23,7 @@ public class EventListener extends ListenerAdapter {
                 .setFooter("© SnyprBot | https://snyperbot.xyz", null)
                 .setTimestamp(Instant.now()).build();
         botLog.sendMessage(readyEmbed).queue();
-        event.getJDA().getPresence().setGame(Game.listening(SnyprBot.getConfig().getDefaultActivity()));
+        event.getJDA().getPresence().setActivity(Activity.listening(SnyprBot.getConfig().getDefaultActivity()));
     }
 
     @Override

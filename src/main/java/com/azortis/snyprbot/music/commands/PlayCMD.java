@@ -5,17 +5,21 @@ import com.azortis.snyprbot.CommandCategory;
 import com.azortis.snyprbot.SnyprBot;
 import com.azortis.snyprbot.music.MusicManager;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
-import net.dv8tion.jda.core.entities.VoiceChannel;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.apache.commons.validator.routines.UrlValidator;
 
 public class PlayCMD implements Command {
 
     @Override
     public void execute(MessageReceivedEvent event, String[] args) {
-        if(event.getGuild() != null) {
+        if(event.isFromGuild()) {
             MusicManager musicManager = SnyprBot.getMusicManager();
             VoiceChannel voiceChannel = event.getMember().getVoiceState().getChannel();
+            if(voiceChannel == null){
+                event.getMessage().getChannel().sendMessage(":x: **You must be in a voice channel to do that!**").queue();
+                return;
+            }
             String trackId;
             if(UrlValidator.getInstance().isValid(args[0])){
                 trackId = args[0];

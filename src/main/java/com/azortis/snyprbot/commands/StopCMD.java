@@ -3,7 +3,7 @@ package com.azortis.snyprbot.commands;
 import com.azortis.snyprbot.Command;
 import com.azortis.snyprbot.CommandCategory;
 import com.azortis.snyprbot.SnyprBot;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class StopCMD implements Command {
 

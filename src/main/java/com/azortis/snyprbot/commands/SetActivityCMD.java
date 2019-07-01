@@ -3,8 +3,8 @@ package com.azortis.snyprbot.commands;
 import com.azortis.snyprbot.Command;
 import com.azortis.snyprbot.CommandCategory;
 import com.azortis.snyprbot.SnyprBot;
-import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class SetActivityCMD implements Command {
 
@@ -17,24 +17,24 @@ public class SetActivityCMD implements Command {
             }
             String activity = stringBuilder.toString().trim();
             if (activity.equals("")) {
-                event.getJDA().getPresence().setGame(Game.of(Game.GameType.DEFAULT, "snyprbot.xyz"));
+                event.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.DEFAULT, "snyprbot.xyz"));
                 event.getChannel().sendMessage(":white_check_mark: **Set my activity to:** `default settings`").queue();
             }
             switch (args[0]){
                 case "-streaming":
-                    event.getJDA().getPresence().setGame(Game.of(Game.GameType.STREAMING, activity));
+                    event.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.STREAMING, activity));
                     event.getChannel().sendMessage(":white_check_mark: **Set my activity to:** `" + activity + "`").queue();
                     break;
                 case "-watching":
-                    event.getJDA().getPresence().setGame(Game.of(Game.GameType.WATCHING, activity));
+                    event.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.WATCHING, activity));
                     event.getChannel().sendMessage(":white_check_mark: **Set my activity to:** `" + activity + "`").queue();
                     break;
                 case "-listening":
-                    event.getJDA().getPresence().setGame(Game.of(Game.GameType.LISTENING, activity));
+                    event.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.LISTENING, activity));
                     event.getChannel().sendMessage(":white_check_mark: **Set my activity to:** `" + activity + "`").queue();
                     break;
                 default:
-                    event.getJDA().getPresence().setGame(Game.of(Game.GameType.DEFAULT, activity));
+                    event.getJDA().getPresence().setActivity(Activity.of(Activity.ActivityType.DEFAULT, activity));
                     event.getChannel().sendMessage(":white_check_mark: **Set my activity to:** `" + activity + "`").queue();
                     break;
             }

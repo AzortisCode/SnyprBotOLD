@@ -11,8 +11,8 @@ import com.azortis.snyprbot.music.commands.*;
 import com.azortis.snyprbot.settings.SettingsManager;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
