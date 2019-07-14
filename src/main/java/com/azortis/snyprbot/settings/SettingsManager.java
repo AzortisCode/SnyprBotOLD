@@ -1,5 +1,6 @@
 package com.azortis.snyprbot.settings;
 
+import com.azortis.snyprbot.Callback;
 import com.azortis.snyprbot.SnyprBot;
 import com.azortis.snyprbot.database.Database;
 
@@ -7,6 +8,7 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("all")
 public class SettingsManager {
     private Map<Long, GuildSettings> guildSettingsCache = new HashMap<>();
 
@@ -20,9 +22,16 @@ public class SettingsManager {
         }
     }
 
-    public GuildSettings getGuildSettings(Long guildId){
+    public GuildSettings getGuildSettings(Long guildId, Callback callback){
         if(!guildSettingsCache.containsKey(guildId)){
-            Database database = SnyprBot.getDatabaseManager().getDatabase();
+            getGuildSettingsAsync(guildId, callback);
+        }
+        return guildSettingsCache.get(guildId);
+    }
+
+    private void getGuildSettingsAsync(Long guildId, Callback callback){
+        Database database = SnyprBot.getDatabaseManager().getDatabase();
+        new Thread(()-> {
             GuildSettings settings;
             try(Connection connection = database.getConnection()){
                 PreparedStatement statement = connection.prepareStatement("SELECT * FROM guildSettings WHERE guildId=?", ResultSet.CONCUR_READ_ONLY);
@@ -30,14 +39,18 @@ public class SettingsManager {
 
                 ResultSet result = statement.executeQuery();
                 if(result != null){
-                    settings = new GuildSettings(result.getBoolean("djOnly"), result.getLong("djRoleID"), result.getLong("musicTextChannelId"), result.getLong("musicVoiceChannelId"));
+                    settings = new GuildSettings(guildId, result.getBoolean("djOnly"), result.getLong("djRoleID"), result.getLong("musicTextChannelId"), result.getLong("musicVoiceChannelId"));
                     guildSettingsCache.put(guildId, settings);
+                    callback.run(settings);
+                }else{
+                    settings = new GuildSettings(guildId,false, null, null, null);
+                    guildSettingsCache.put(guildId, settings);
+                    callback.run(settings);
                 }
-            }catch (SQLException e){
-                e.printStackTrace();
+            }catch (SQLException ex){
+                ex.printStackTrace();
             }
-        }
-        return guildSettingsCache.get(guildId);
+        }).run();
     }
 
 }
