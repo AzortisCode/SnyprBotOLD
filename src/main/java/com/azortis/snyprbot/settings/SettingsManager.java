@@ -25,6 +25,7 @@ public class SettingsManager {
     public GuildSettings getGuildSettings(Long guildId, Callback callback){
         if(!guildSettingsCache.containsKey(guildId)){
             getGuildSettingsAsync(guildId, callback);
+            return null;
         }
         return guildSettingsCache.get(guildId);
     }
