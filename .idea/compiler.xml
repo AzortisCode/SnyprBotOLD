@@ -9,8 +9,5 @@
         <module name="snyprbot" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="SnyprBotJAVA" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

@@ -25,7 +25,7 @@ public class MusicManager {
         this.musicManagers = new HashMap<>();
         this.playerManager = new DefaultAudioPlayerManager();
         playerManager.registerSourceManager(new YoutubeAudioSourceManager());
-        youtubeSearchProvider = new YoutubeSearchProvider(playerManager.source(YoutubeAudioSourceManager.class));
+        youtubeSearchProvider = new YoutubeSearchProvider();
         AudioSourceManagers.registerRemoteSources(playerManager);
         AudioSourceManagers.registerLocalSource(playerManager);
     }

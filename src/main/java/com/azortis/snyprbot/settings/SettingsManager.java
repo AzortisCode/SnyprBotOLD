@@ -22,15 +22,15 @@ public class SettingsManager {
         }
     }
 
-    public GuildSettings getGuildSettings(Long guildId, Callback callback){
+    public GuildSettings getGuildSettings(Long guildId, Callback callback, Object... objects){
         if(!guildSettingsCache.containsKey(guildId)){
-            getGuildSettingsAsync(guildId, callback);
+            getGuildSettingsAsync(guildId, callback, objects);
             return null;
         }
         return guildSettingsCache.get(guildId);
     }
 
-    private void getGuildSettingsAsync(Long guildId, Callback callback){
+    private void getGuildSettingsAsync(Long guildId, Callback callback, Object... objects){
         Database database = SnyprBot.getDatabaseManager().getDatabase();
         new Thread(()-> {
             GuildSettings settings;
@@ -46,7 +46,7 @@ public class SettingsManager {
                 }else{
                     settings = new GuildSettings(guildId,false, null, null, null);
                     guildSettingsCache.put(guildId, settings);
-                    callback.run(settings);
+                    callback.run(settings, objects);
                 }
             }catch (SQLException ex){
                 ex.printStackTrace();

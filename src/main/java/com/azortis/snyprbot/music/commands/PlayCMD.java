@@ -30,7 +30,7 @@ public class PlayCMD implements Command {
                 }
                 String searchArgs = stringBuilder.toString().trim();
                 event.getChannel().sendMessage("**Searching** :mag_right: `" + searchArgs + "`").queue();
-                AudioPlaylist playlist = (AudioPlaylist) musicManager.getYoutubeSearchProvider().loadSearchResult(searchArgs);
+                AudioPlaylist playlist = (AudioPlaylist) musicManager.getYoutubeSearchProvider().loadSearchResult(searchArgs, musicManager.getYoutubeSearchProvider());
                 trackId = playlist.getTracks().get(0).getInfo().uri;
             }
             musicManager.queue(voiceChannel, event.getTextChannel(), trackId, event.getAuthor().getIdLong());
